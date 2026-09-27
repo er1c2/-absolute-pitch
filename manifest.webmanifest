@@ -1,0 +1,11 @@
+{
+  "name": "Perfect Pitch Test",
+  "short_name": "Perfect Pitch",
+  "description": "Offline chromatic perfect pitch ear training.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f5f5f7",
+  "theme_color": "#f5f5f7",
+  "orientation": "portrait",
+  "icons": []
+}
