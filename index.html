@@ -12,7 +12,7 @@
 <style>
 :root{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif;color:#111;background:#f5f5f7}
 *{box-sizing:border-box}
-html,body{touch-action:manipulation}
+html,body{touch-action:pan-y;overscroll-behavior-x:none}
 body{margin:0;min-height:100vh;display:flex;justify-content:center}
 .app{width:min(620px,100%);padding:28px 18px 38px}
 h1{font-size:29px;letter-spacing:-.5px;margin:8px 0 5px;text-align:center}
@@ -23,7 +23,7 @@ h1{font-size:29px;letter-spacing:-.5px;margin:8px 0 5px;text-align:center}
 .stat b{display:block;font-size:20px}.stat span{font-size:12px;color:#777}
 #status{text-align:center;height:31px;font-size:17px;font-weight:600}
 .listen{display:flex;gap:10px;margin:10px 0 18px}
-button{font:inherit;border:0;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+button{font:inherit;border:0;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:pan-y}
 .action{flex:1;padding:13px;border-radius:13px;background:#e9e9ee}
 .action.primary{background:#111;color:#fff}
 .keys{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
@@ -180,6 +180,24 @@ $("reset").onclick=()=>{
 if("serviceWorker" in navigator && location.protocol!=="file:"){
   navigator.serviceWorker.register("./sw.js").catch(()=>{});
 }
+</script>
+
+<script>
+// iOS Safari: prevent page zoom gestures while preserving normal vertical scrolling.
+(function(){
+  const block = e => e.preventDefault();
+  document.addEventListener("gesturestart", block, {passive:false});
+  document.addEventListener("gesturechange", block, {passive:false});
+  document.addEventListener("gestureend", block, {passive:false});
+  document.addEventListener("dblclick", block, {passive:false});
+
+  let lastTouchEnd = 0;
+  document.addEventListener("touchend", function(e){
+    const now = Date.now();
+    if (now - lastTouchEnd <= 300) e.preventDefault();
+    lastTouchEnd = now;
+  }, {passive:false});
+})();
 </script>
 </body>
 </html>
