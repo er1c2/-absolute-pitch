@@ -1,4 +1,4 @@
-const CACHE="perfect-pitch-v6";
+const CACHE="perfect-pitch-v7";
 const ASSETS=[
   "./",
   "./index.html",
